@@ -1,0 +1,39 @@
+(defun c:RECTABLE ( / longueur largeur ret)
+
+  (setq longueur (getreal "\nLongueur de la table (mm) : "))
+  (setq largeur  (getreal "\nLargeur de la table (mm) : "))
+  (setq ret 50) ;; retombée fixe
+
+  ;; Rectangle central
+  (command "_.LINE" '(0 0) (list longueur 0) "")
+  (command "_.LINE" (list longueur 0) (list longueur largeur) "")
+  (command "_.LINE" (list longueur largeur) (list 0 largeur) "")
+  (command "_.LINE" (list 0 largeur) '(0 0) "")
+
+  ;; Haut
+  (command "_.LINE" (list 0 largeur) (list longueur largeur) "")
+  (command "_.LINE" (list longueur largeur) (list longueur (+ largeur ret)) "")
+  (command "_.LINE" (list longueur (+ largeur ret)) (list 0 (+ largeur ret)) "")
+  (command "_.LINE" (list 0 (+ largeur ret)) (list 0 largeur) "")
+
+  ;; Bas
+  (command "_.LINE" '(0 0) (list longueur 0) "")
+  (command "_.LINE" (list longueur 0) (list longueur (- ret)) "")
+  (command "_.LINE" (list longueur (- ret)) (list 0 (- ret)) "")
+  (command "_.LINE" (list 0 (- ret)) '(0 0) "")
+
+  ;; Gauche
+  (command "_.LINE" '(0 0) (list (- ret) 0) "")
+  (command "_.LINE" (list (- ret) 0) (list (- ret) largeur) "")
+  (command "_.LINE" (list (- ret) largeur) (list 0 largeur) "")
+  (command "_.LINE" (list 0 largeur) '(0 0) "")
+
+  ;; Droite
+  (command "_.LINE" (list longueur 0) (list (+ longueur ret) 0) "")
+  (command "_.LINE" (list (+ longueur ret) 0) (list (+ longueur ret) largeur) "")
+  (command "_.LINE" (list (+ longueur ret) largeur) (list longueur largeur) "")
+  (command "_.LINE" (list longueur largeur) (list longueur 0) "")
+
+  (princ "\nPatron avec 4 retombées de 50 mm créé avec des lignes.")
+  (princ)
+)
