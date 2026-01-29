@@ -1,0 +1,54 @@
+(defun c:RECTABLE ( / longueur largeur ret)
+
+  (setq longueur (getreal "\nLongueur de la table (mm) : "))
+  (setq largeur  (getreal "\nLargeur de la table (mm) : "))
+  (setq ret 50) ;; retombée fixe
+
+  ;; Rectangle central
+  (command "_.PLINE"
+           '(0 0)
+           (list longueur 0)
+           (list longueur largeur)
+           (list 0 largeur)
+           "C"
+  )
+
+  ;; Haut
+  (command "_.PLINE"
+           (list 0 largeur)
+           (list longueur largeur)
+           (list longueur (+ largeur ret))
+           (list 0 (+ largeur ret))
+           "C"
+  )
+
+  ;; Bas
+  (command "_.PLINE"
+           (list 0 0)
+           (list longueur 0)
+           (list longueur (- ret))
+           (list 0 (- ret))
+           "C"
+  )
+
+  ;; Gauche
+  (command "_.PLINE"
+           (list 0 0)
+           (list (- ret) 0)
+           (list (- ret) largeur)
+           (list 0 largeur)
+           "C"
+  )
+
+  ;; Droite
+  (command "_.PLINE"
+           (list longueur 0)
+           (list (+ longueur ret) 0)
+           (list (+ longueur ret) largeur)
+           (list longueur largeur)
+           "C"
+  )
+
+  (princ "\nPatron avec 4 retombées de 50 mm créé.")
+  (princ)
+)
